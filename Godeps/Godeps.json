@@ -1,5 +1,5 @@
 {
-	"ImportPath": "github.com/cf-furnace/k8s-stager",
+	"ImportPath": "github.com/cf-furnace/k8s-tps",
 	"GoVersion": "go1.6",
 	"GodepVersion": "v62",
 	"Packages": [

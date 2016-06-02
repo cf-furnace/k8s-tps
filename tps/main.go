@@ -1,6 +1,6 @@
 package main
 
-import "github.com/cf-furnace/k8s-stager/cmd"
+import "github.com/cf-furnace/k8s-tps/cmd"
 
 var version = ""
 

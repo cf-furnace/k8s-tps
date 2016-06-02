@@ -12,18 +12,18 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 )
 
-// NewStopStagingParams creates a new StopStagingParams object
+// NewLRPStatusParams creates a new LRPStatusParams object
 // with the default values initialized.
-func NewStopStagingParams() StopStagingParams {
+func NewLRPStatusParams() LRPStatusParams {
 	var ()
-	return StopStagingParams{}
+	return LRPStatusParams{}
 }
 
-// StopStagingParams contains all the bound params for the stop staging operation
+// LRPStatusParams contains all the bound params for the l r p status operation
 // typically these are obtained from a http.Request
 //
-// swagger:parameters stopStaging
-type StopStagingParams struct {
+// swagger:parameters LRPStatus
+type LRPStatusParams struct {
 
 	// HTTP Request Object
 	HTTPRequest *http.Request
@@ -32,17 +32,17 @@ type StopStagingParams struct {
 	  Required: true
 	  In: path
 	*/
-	StagingGUID string
+	GUID string
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
 // for simple values it will use straight method calls
-func (o *StopStagingParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
+func (o *LRPStatusParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
 	var res []error
 	o.HTTPRequest = r
 
-	rStagingGUID, rhkStagingGUID, _ := route.Params.GetOK("staging_guid")
-	if err := o.bindStagingGUID(rStagingGUID, rhkStagingGUID, route.Formats); err != nil {
+	rGUID, rhkGUID, _ := route.Params.GetOK("guid")
+	if err := o.bindGUID(rGUID, rhkGUID, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -52,13 +52,13 @@ func (o *StopStagingParams) BindRequest(r *http.Request, route *middleware.Match
 	return nil
 }
 
-func (o *StopStagingParams) bindStagingGUID(rawData []string, hasKey bool, formats strfmt.Registry) error {
+func (o *LRPStatusParams) bindGUID(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
 	}
 
-	o.StagingGUID = raw
+	o.GUID = raw
 
 	return nil
 }

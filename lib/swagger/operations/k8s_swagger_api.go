@@ -44,12 +44,12 @@ type K8sSwaggerAPI struct {
 	// JSONProducer registers a producer for a "application/json" mime type
 	JSONProducer runtime.Producer
 
-	// StageHandler sets the operation handler for the stage operation
-	StageHandler StageHandler
-	// StagingCompleteHandler sets the operation handler for the staging complete operation
-	StagingCompleteHandler StagingCompleteHandler
-	// StopStagingHandler sets the operation handler for the stop staging operation
-	StopStagingHandler StopStagingHandler
+	// LRPStatsHandler sets the operation handler for the l r p stats operation
+	LRPStatsHandler LRPStatsHandler
+	// LRPStatusHandler sets the operation handler for the l r p status operation
+	LRPStatusHandler LRPStatusHandler
+	// BulkLRPStatusHandler sets the operation handler for the bulk l r p status operation
+	BulkLRPStatusHandler BulkLRPStatusHandler
 
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
@@ -108,16 +108,16 @@ func (o *K8sSwaggerAPI) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
-	if o.StageHandler == nil {
-		unregistered = append(unregistered, "StageHandler")
+	if o.LRPStatsHandler == nil {
+		unregistered = append(unregistered, "LRPStatsHandler")
 	}
 
-	if o.StagingCompleteHandler == nil {
-		unregistered = append(unregistered, "StagingCompleteHandler")
+	if o.LRPStatusHandler == nil {
+		unregistered = append(unregistered, "LRPStatusHandler")
 	}
 
-	if o.StopStagingHandler == nil {
-		unregistered = append(unregistered, "StopStagingHandler")
+	if o.BulkLRPStatusHandler == nil {
+		unregistered = append(unregistered, "BulkLRPStatusHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -193,20 +193,20 @@ func (o *K8sSwaggerAPI) initHandlerCache() {
 		o.handlers = make(map[string]map[string]http.Handler)
 	}
 
-	if o.handlers["PUT"] == nil {
-		o.handlers[strings.ToUpper("PUT")] = make(map[string]http.Handler)
+	if o.handlers["GET"] == nil {
+		o.handlers[strings.ToUpper("GET")] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/staging/{staging_guid}"] = NewStage(o.context, o.StageHandler)
+	o.handlers["GET"]["/actual_lrps/{guid}/stats"] = NewLRPStats(o.context, o.LRPStatsHandler)
 
-	if o.handlers["POST"] == nil {
-		o.handlers[strings.ToUpper("POST")] = make(map[string]http.Handler)
+	if o.handlers["GET"] == nil {
+		o.handlers[strings.ToUpper("GET")] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/staging/{staging_guid}"] = NewStagingComplete(o.context, o.StagingCompleteHandler)
+	o.handlers["GET"]["/actual_lrps/{guid}"] = NewLRPStatus(o.context, o.LRPStatusHandler)
 
-	if o.handlers["DELETE"] == nil {
-		o.handlers[strings.ToUpper("DELETE")] = make(map[string]http.Handler)
+	if o.handlers["GET"] == nil {
+		o.handlers[strings.ToUpper("GET")] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/staging/{staging_guid}"] = NewStopStaging(o.context, o.StopStagingHandler)
+	o.handlers["GET"]["/bulk_actual_lrp_status"] = NewBulkLRPStatus(o.context, o.BulkLRPStatusHandler)
 
 }
 

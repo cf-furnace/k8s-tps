@@ -8,8 +8,10 @@ import (
 	runtime "github.com/go-openapi/runtime"
 	middleware "github.com/go-openapi/runtime/middleware"
 
-	"github.com/cf-furnace/k8s-stager/lib/swagger/operations"
+	"github.com/cf-furnace/k8s-tps/lib/swagger/operations"
 )
+
+// This file is safe to edit. Once it exists it will not be overwritten
 
 func configureFlags(api *operations.K8sSwaggerAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
@@ -20,18 +22,24 @@ func ConfigureAPI(api *operations.K8sSwaggerAPI) http.Handler {
 	// configure the api here
 	api.ServeError = errors.ServeError
 
+	// Set your custom logger if needed. Default one is log.Printf
+	// Expected interface func(string, ...interface{})
+	//
+	// Example:
+	// s.api.Logger = log.Printf
+
 	api.JSONConsumer = runtime.JSONConsumer()
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	api.StageHandler = operations.StageHandlerFunc(func(params operations.StageParams) middleware.Responder {
-		return middleware.NotImplemented("operation .Stage has not yet been implemented")
+	api.LRPStatsHandler = operations.LRPStatsHandlerFunc(func(params operations.LRPStatsParams) middleware.Responder {
+		return middleware.NotImplemented("operation .LRPStats has not yet been implemented")
 	})
-	api.StagingCompleteHandler = operations.StagingCompleteHandlerFunc(func(params operations.StagingCompleteParams) middleware.Responder {
-		return middleware.NotImplemented("operation .StagingComplete has not yet been implemented")
+	api.LRPStatusHandler = operations.LRPStatusHandlerFunc(func(params operations.LRPStatusParams) middleware.Responder {
+		return middleware.NotImplemented("operation .LRPStatus has not yet been implemented")
 	})
-	api.StopStagingHandler = operations.StopStagingHandlerFunc(func(params operations.StopStagingParams) middleware.Responder {
-		return middleware.NotImplemented("operation .StopStaging has not yet been implemented")
+	api.BulkLRPStatusHandler = operations.BulkLRPStatusHandlerFunc(func(params operations.BulkLRPStatusParams) middleware.Responder {
+		return middleware.NotImplemented("operation .BulkLRPStatus has not yet been implemented")
 	})
 
 	api.ServerShutdown = func() {}

@@ -10,9 +10,9 @@ set -o errexit
 echo "${OK_COLOR}==> Building ${ERROR_COLOR}"
 
 for OS in ${OSES}; do \
-		 env GOOS=${OS} GOARCH=amd64 go build -o build/${OS}-amd64/k8s-stager/stager \
+		 env GOOS=${OS} GOARCH=amd64 go build -o build/${OS}-amd64/k8s-tps/tps \
 		 -ldflags="-X main.version=${APP_VERSION}" \
-		 ./stager/
+		 ./tps/
 done
 
 echo "${NO_COLOR}\c"

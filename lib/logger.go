@@ -16,7 +16,7 @@ const (
 
 //NewLogger initializes a new logger
 func NewLogger(level string) lager.Logger {
-	var logger = lager.NewLogger("k8s-stager")
+	var logger = lager.NewLogger("k8s-tps")
 
 	var minLogLevel lager.LogLevel
 	switch level {
